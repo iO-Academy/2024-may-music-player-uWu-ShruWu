@@ -18,6 +18,7 @@ $artists = $artistsModel->getAllArtists();
 $albumsModel = new AlbumsModel($db);
 $album = new Album();
 $displayArtists = Choose3ArtistsService::choose3Artists($artists);
+$popAlbums = $albumsModel->getMostPlayedAlbums();
 
 ?>
 <!DOCTYPE html>
@@ -76,6 +77,27 @@ $displayArtists = Choose3ArtistsService::choose3Artists($artists);
                             </svg>
                         </a>
                     </div>
+                    <div class="">
+                        <h3 class="text-xl font-bold mb-3">Most Popular Albums</h3>
+                        <?php
+                        foreach($popAlbums as $album)
+                        {
+                            $artistById = $artistsModel->getArtistById($album->getArtistId());
+                            echo "<div class='border-b border-slate-500 pb-5 mb-3 flex justify-between items-center'>
+                                <img src='{$album->getArtworkURL()}' class='size-14' />
+                                <div class='w-3/4 px-3'>
+                                <h4 class='font-bold text-lg'>{$album->getAlbumName()}</h4>
+                                <p class='text-sm'>{$artistById->getArtistName()}</p>
+                                </div>
+                            <a href='artist.php?id={$artistById->getId()}' class='hover:text-slate-500 hover:cursor-pointer'>
+                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                    <path stroke-linecap='round' stroke-linejoin='round' d='m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' />
+                                </svg></a>
+                                </div>";
+                        }
+                        ?>
+                    </div>
+                </div>
                 </div>
             </section>
             <section class="group-[.minimised]:py-2 group-[.minimised]:h-24 h-1/4 border-t bg-cyan-950 border-slate-500 p-6">

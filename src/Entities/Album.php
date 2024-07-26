@@ -7,6 +7,13 @@ class Album {
     private int $artistId;
     private int $song_count;
 
+    private int $playCount;
+
+    public function getPlayCount(): int
+    {
+        return $this->playCount;
+    }
+
     public function getAlbumId(): int
     {
         return $this->albumId;
